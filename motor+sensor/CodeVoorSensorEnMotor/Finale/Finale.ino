@@ -8,7 +8,7 @@ const int BUTTON_PIN = 15;    // Knop op pin 15 (start motoren)
 const int HALL_SENSOR_PIN = 2; // Hall sensor op pin 2
 const int BUTTON_23_PIN = 23;  // Knop op pin 23 voor omhoog bewegen
 const int HALL_SENSOR_22_PIN = 22; // Tweede Hall sensor op pin 22
-const int MOTOR_SPEED = 1500;  // Snelheid van de motoren in microseconden
+const int MOTOR_SPEED = 750;  // Snelheid van de motoren in microseconden
 
 void setup() {
   pinMode(BUTTON_PIN, INPUT_PULLUP);     // Knop op pin 15
@@ -51,7 +51,6 @@ void runMotorUntilSensor(int hallSensorPin, bool omhoog) {
   Serial.println("Hall sensor actief");
   stopMotor();
 }
-//HOI DIT IS EEN TEST VOOR GITHUB
 
 // Functie om de motoren te stoppen
 void stopMotor() {
