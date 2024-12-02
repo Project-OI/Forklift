@@ -51,7 +51,7 @@ void runMotorUntilSensor(int hallSensorPin, bool omhoog) {
   Serial.println("Hall sensor actief");
   stopMotor();
 }
-
+//HOI DIT IS EEN TEST VOOR GITHUB
 // Functie om de motoren te stoppen
 void stopMotor() {
   digitalWrite(STEP_PIN, LOW);
