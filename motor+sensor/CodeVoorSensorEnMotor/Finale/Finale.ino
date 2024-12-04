@@ -1,4 +1,3 @@
-// Pinnen voor motoren en knoppen
 const int DIR_PIN = 21;       // Richtingspin motor 1
 const int STEP_PIN = 19;      // Stappenpin motor 1
 const int DIR2_PIN = 17;      // Richtingspin motor 2
@@ -9,6 +8,7 @@ const int HALL_SENSOR_PIN = 2; // Hall sensor op pin 2
 const int BUTTON_23_PIN = 23;  // Knop op pin 23 voor omhoog bewegen
 const int BUTTON_18_PIN = 18;  // Knop op pin 18 voor autorisatie van knop 23
 const int HALL_SENSOR_22_PIN = 22; // Tweede Hall sensor op pin 22
+const int BUTTON_4_PIN = 4; //knop pin 4
 const int MOTOR_SPEED = 750;  // Snelheid van de motoren in microseconden
 
 bool klik = false;    // Variabele om te controleren of knop 23 mag werken
@@ -19,6 +19,7 @@ void setup() {
   pinMode(BUTTON_23_PIN, INPUT_PULLUP);  // Knop op pin 23
   pinMode(BUTTON_18_PIN, INPUT_PULLUP);  // Knop op pin 18
   pinMode(HALL_SENSOR_22_PIN, INPUT);    // Hall sensor op pin 22
+  pinMode(BUTTON_4_PIN, INPUT_PULLUP);  // Knop op pin 18
 
   pinMode(DIR_PIN, OUTPUT);              // Motor 1 richting
   pinMode(STEP_PIN, OUTPUT);             // Motor 1 stappen
@@ -38,8 +39,12 @@ void loop() {
   // Controleer of de knop op pin 18 is ingedrukt om autorisatie te geven
   if (digitalRead(BUTTON_18_PIN) == LOW) {
     Serial.println("Knop 18 ingedrukt: autorisatie gegeven voor knop 23.");
+ 
+    tijdMotor();
+    delay(1000);
+    stopMotor();
+    delay(500);          // Debouncing delay 
     klik = true; // Zet autorisatie op true
-    delay(500);          // Debouncing delay
   }
 
   // Controleer of de knop op pin 23 is ingedrukt en geautoriseerd is
@@ -49,6 +54,13 @@ void loop() {
     klik = false; // Reset autorisatie na uitvoering
     Serial.println("Autorisatie gereset");
   }
+   if (digitalRead(BUTTON_4_PIN) == LOW) {
+    tijd();
+    delay(250);
+    stopMotor();
+    delay(500);          // Debouncing delay 
+  }
+  
 }
 
 // Functie om motoren te laten draaien tot een Hall sensor actief wordt
@@ -63,6 +75,28 @@ void Motor(int hallSensorPin, bool omhoog) {
 
   Serial.println("Hall sensor actief");
   stopMotor();
+}
+
+void tijd() {
+  digitalWrite(DIR_PIN, LOW);
+  digitalWrite(DIR2_PIN, LOW); 
+  digitalWrite(STEP_PIN, LOW);
+  digitalWrite(STEP2_PIN, LOW);
+  for (int i = 0; i < 1000; i++) {  // Draai de motoren voor 1 seconden
+    stepMotor();  // Maak een stap
+    delay(1);     // Wacht een kleine tijd tussen de stappen
+  }
+}
+
+void tijdMotor() {
+  digitalWrite(DIR_PIN, HIGH);
+  digitalWrite(DIR2_PIN, HIGH); 
+  digitalWrite(STEP_PIN, LOW);
+  digitalWrite(STEP2_PIN, LOW);
+  for (int i = 0; i < 10000; i++) {  // Draai de motoren voor 3 seconden
+    stepMotor();  // Maak een stap
+    delay(1);     // Wacht een kleine tijd tussen de stappen
+  }
 }
 
 // Functie om de motoren te stoppen
