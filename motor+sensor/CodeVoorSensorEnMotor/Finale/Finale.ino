@@ -32,7 +32,7 @@ void setup() {
 void loop() {
   // Controleer of de knop op pin 18 is ingedrukt (om toegang te krijgen tot pin 23)
   if (digitalRead(BUTTON_18_PIN) == LOW) {
-    Serial.println("Knop 18 ingedrukt, pin 23 is nu beschikbaar");
+    Serial.println("Knop 18 ingedrukt, pin 23 is nu beschikbaar om uitgevoerd te worden");
     klik = true;  // Zet de boolean op true zodat pin 23 knop werkt en de code daar kan worden uitgevoerd!
     delay(500); // Delayyy
   }
@@ -43,6 +43,9 @@ void loop() {
     digitalWrite(DIR_PIN, LOW);  // Zet richting naar omlaag
     digitalWrite(DIR2_PIN, LOW);
     runMotorUntilSensor(HALL_SENSOR_PIN); // Motoren draaien totdat Hall sensor op pin 2 actief wordt
+  } else {
+    Serial.println("motoren gaan uit");
+    stopMotor();
   }
 
   // Als de knop op pin 23 wordt ingedrukt, en pin 18 is eerder ingedrukt, draai de motor omhoog
