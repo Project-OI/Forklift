@@ -58,7 +58,7 @@ void loop() {
     tijd();
     delay(250);
     stopMotor();
-    delay(500);          // Debouncing delay 
+    delay(250);          // Debouncing delay 
   }
   
 }
@@ -82,9 +82,8 @@ void tijd() {
   digitalWrite(DIR2_PIN, LOW); 
   digitalWrite(STEP_PIN, LOW);
   digitalWrite(STEP2_PIN, LOW);
-  for (int i = 0; i < 1000; i++) {  // Draai de motoren voor 1 seconden
+  for (int i = 0; i < 1000; i++) {  // Draai de motoren voor 1.5 seconden 
     stepMotor();  // Maak een stap
-    delay(1);     // Wacht een kleine tijd tussen de stappen
   }
 }
 
@@ -93,9 +92,8 @@ void tijdMotor() {
   digitalWrite(DIR2_PIN, HIGH); 
   digitalWrite(STEP_PIN, LOW);
   digitalWrite(STEP2_PIN, LOW);
-  for (int i = 0; i < 10000; i++) {  // Draai de motoren voor 3 seconden
+  for (int i = 0; i < 20000; i++) {  // Draai de motoren voor 15 sec, legt 10cm af indien < 10000, op <20000 legt ie 20cm af in 15sec
     stepMotor();  // Maak een stap
-    delay(1);     // Wacht een kleine tijd tussen de stappen
   }
 }
 
