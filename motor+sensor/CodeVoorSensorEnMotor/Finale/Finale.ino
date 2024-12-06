@@ -74,6 +74,18 @@ void Motor(int hallSensorPin, bool omhoog) {
   }
 
   Serial.println("Hall sensor actief");
+
+  // Beweeg kort omhoog uit bereik van de sensor  
+  delay(150);
+  Serial.println("Motor beweegt kort omhoog uit bereik van de sensor");
+  digitalWrite(DIR_PIN, HIGH); // Richting omhoog
+  digitalWrite(DIR2_PIN, HIGH);
+
+  for (int i = 0; i < 250; i++) { // Maak een paar stappen omhoog (aantal kun je aanpassen)
+
+    stepMotor();
+  }
+
   stopMotor();
 }
 
