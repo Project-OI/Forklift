@@ -26,7 +26,7 @@ void setup() {
   pinMode(DIR2_PIN, OUTPUT);             // Motor 2 richting
   pinMode(STEP2_PIN, OUTPUT);            // Motor 2 stappen
 
-  Serial.begin(115200);                  // Seriële communicatie voor debugging
+  Serial.begin(115200);                  // Seriële communicatie voor serial monitor ig
 }
 
 void loop() {
@@ -51,7 +51,7 @@ void loop() {
   if (digitalRead(BUTTON_23_PIN) == LOW && klik) {
     Serial.println("Knop 23 ingedrukt en geautoriseerd");
     Motor(HALL_SENSOR_22_PIN, true); // Motoren draaien omhoog tot Hall sensor op pin 22 actief wordt
-    klik = false; // Reset autorisatie na uitvoering
+    klik = false; // Reset knopske autorisatie na uitvoering
     Serial.println("Autorisatie gereset");
   }
    if (digitalRead(BUTTON_4_PIN) == LOW) {
@@ -63,9 +63,7 @@ void loop() {
   
 }
 
-// Functie om motoren te laten draaien tot een Hall sensor actief wordt
 void Motor(int hallSensorPin, bool omhoog) {
-  // Stel de richting in afhankelijk van omhoog/omlaag
   digitalWrite(DIR_PIN, omhoog ? HIGH : LOW);
   digitalWrite(DIR2_PIN, omhoog ? HIGH : LOW);
 
@@ -75,13 +73,12 @@ void Motor(int hallSensorPin, bool omhoog) {
 
   Serial.println("Hall sensor actief");
 
-  // Beweeg kort omhoog uit bereik van de sensor  
   delay(150);
   Serial.println("Motor beweegt kort omhoog uit bereik van de sensor");
   digitalWrite(DIR_PIN, HIGH); // Richting omhoog
   digitalWrite(DIR2_PIN, HIGH);
 
-  for (int i = 0; i < 250; i++) { // Maak een paar stappen omhoog (aantal kun je aanpassen)
+  for (int i = 0; i < 200; i++) { // Maak een paar stappen omhoog 
 
     stepMotor();
   }
@@ -94,7 +91,7 @@ void tijd() {
   digitalWrite(DIR2_PIN, LOW); 
   digitalWrite(STEP_PIN, LOW);
   digitalWrite(STEP2_PIN, LOW);
-  for (int i = 0; i < 1000; i++) {  // Draai de motoren voor 1.5 seconden 
+  for (int i = 0; i < 1000; i++) {  // Draai de motoren omlaag voor doosje afzetten, maak [1000] groter om meer naar beneden te gaan
     stepMotor();  // Maak een stap
   }
 }
@@ -104,7 +101,7 @@ void tijdMotor() {
   digitalWrite(DIR2_PIN, HIGH); 
   digitalWrite(STEP_PIN, LOW);
   digitalWrite(STEP2_PIN, LOW);
-  for (int i = 0; i < 20000; i++) {  // Draai de motoren voor 15 sec, legt 10cm af indien < 10000, op <20000 legt ie 20cm af in 15sec
+  for (int i = 0; i < 10000; i++) {  // Draai de motoren voor 15 sec, legt 10cm af indien < 10000, op <20000 legt ie 20cm af in 15sec
     stepMotor();  // Maak een stap
   }
 }
