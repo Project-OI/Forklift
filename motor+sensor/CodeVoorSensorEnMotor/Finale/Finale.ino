@@ -30,16 +30,14 @@ void setup() {
 }
 
 void loop() {
+  String serialInput = Serial.readString();
+  serialInput.trim();
   // Controleer of de knop op pin 15 is ingedrukt
-  if (digitalRead(BUTTON_PIN) == LOW) {
+ // if (digitalRead(BUTTON_PIN) == LOW) {
+    if (serialInput == "15"){
     Serial.println("Knop 15 ingedrukt");
     Motor(HALL_SENSOR_PIN, false); // Motoren draaien omlaag tot Hall sensor op pin 2 actief wordt
-  }
-
-  // Controleer of de knop op pin 18 is ingedrukt om autorisatie te geven
-  if (digitalRead(BUTTON_18_PIN) == LOW) {
-    Serial.println("Knop 18 ingedrukt: autorisatie gegeven voor knop 23.");
- 
+    delay(250);
     tijdMotor();
     delay(1000);
     stopMotor();
@@ -48,19 +46,20 @@ void loop() {
   }
 
   // Controleer of de knop op pin 23 is ingedrukt en geautoriseerd is
-  if (digitalRead(BUTTON_23_PIN) == LOW && klik) {
+ // if (digitalRead(BUTTON_23_PIN) == LOW && klik) {
+   if (serialInput == "23"){
     Serial.println("Knop 23 ingedrukt en geautoriseerd");
     Motor(HALL_SENSOR_22_PIN, true); // Motoren draaien omhoog tot Hall sensor op pin 22 actief wordt
     klik = false; // Reset knopske autorisatie na uitvoering
     Serial.println("Autorisatie gereset");
   }
-   if (digitalRead(BUTTON_4_PIN) == LOW) {
+   //if (digitalRead(BUTTON_4_PIN) == LOW) {
+   if (serialInput == "4"){
     tijd();
     delay(250);
     stopMotor();
     delay(250);          // Debouncing delay 
   }
-  
 }
 
 void Motor(int hallSensorPin, bool omhoog) {
