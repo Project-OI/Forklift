@@ -4,7 +4,7 @@ const int DIR2_PIN = 17;      // Richtingspin motor 2
 const int STEP2_PIN = 16;     // Stappenpin motor 2
 
 const int BUTTON_PIN = 15;    // Knop op pin 15 (start motoren)
-const int HALL_SENSOR_PIN = 2; // Hall sensor op pin 2
+const int HALL_SENSOR_PIN = 14; // Hall sensor op pin 2
 const int BUTTON_23_PIN = 23;  // Knop op pin 23 voor omhoog bewegen
 const int BUTTON_18_PIN = 18;  // Knop op pin 18 voor autorisatie van knop 23
 const int HALL_SENSOR_22_PIN = 22; // Tweede Hall sensor op pin 22
@@ -14,12 +14,12 @@ const int MOTOR_SPEED = 750;  // Snelheid van de motoren in microseconden
 bool klik = false;    // Variabele om te controleren of knop 23 mag werken
 
 void setup() {
-  pinMode(BUTTON_PIN, INPUT_PULLUP);     // Knop op pin 15
+  pinMode(BUTTON_PIN, INPUT_PULLDOWN);     // Knop op pin 15
   pinMode(HALL_SENSOR_PIN, INPUT);       // Hall sensor op pin 2
-  pinMode(BUTTON_23_PIN, INPUT_PULLUP);  // Knop op pin 23
-  pinMode(BUTTON_18_PIN, INPUT_PULLUP);  // Knop op pin 18
+  pinMode(BUTTON_23_PIN, INPUT_PULLDOWN);  // Knop op pin 23
+  pinMode(BUTTON_18_PIN, INPUT_PULLDOWN);  // Knop op pin 18
   pinMode(HALL_SENSOR_22_PIN, INPUT);    // Hall sensor op pin 22
-  pinMode(BUTTON_4_PIN, INPUT_PULLUP);  // Knop op pin 18
+  pinMode(BUTTON_4_PIN, INPUT_PULLDOWN);  // Knop op pin 18
 
   pinMode(DIR_PIN, OUTPUT);              // Motor 1 richting
   pinMode(STEP_PIN, OUTPUT);             // Motor 1 stappen
@@ -33,7 +33,7 @@ void loop() {
   String serialInput = Serial.readString();
   serialInput.trim();
   // Controleer of de knop op pin 15 is ingedrukt
- // if (digitalRead(BUTTON_PIN) == LOW) {
+  if (digitalRead(BUTTON_PIN) == HIGH) {
     if (serialInput == "15"){
     Serial.println("Knop 15 ingedrukt");
     Motor(HALL_SENSOR_PIN, false); // Motoren draaien omlaag tot Hall sensor op pin 2 actief wordt
@@ -42,19 +42,18 @@ void loop() {
     delay(1000);
     stopMotor();
     delay(500);          // Debouncing delay 
-    klik = true; // Zet autorisatie op true
   }
 
   // Controleer of de knop op pin 23 is ingedrukt en geautoriseerd is
- // if (digitalRead(BUTTON_23_PIN) == LOW && klik) {
-   if (serialInput == "23"){
+  if (digitalRead(BUTTON_23_PIN) == HIGH {
+ //  if (serialInput == "23"){
     Serial.println("Knop 23 ingedrukt en geautoriseerd");
     Motor(HALL_SENSOR_22_PIN, true); // Motoren draaien omhoog tot Hall sensor op pin 22 actief wordt
     klik = false; // Reset knopske autorisatie na uitvoering
     Serial.println("Autorisatie gereset");
   }
-   //if (digitalRead(BUTTON_4_PIN) == LOW) {
-   if (serialInput == "4"){
+   if (digitalRead(BUTTON_4_PIN) == HIGH) {
+  // if (serialInput == "4"){
     tijd();
     delay(250);
     stopMotor();
