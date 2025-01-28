@@ -34,7 +34,7 @@ void loop() {
   serialInput.trim();
   // Controleer of de knop op pin 15 is ingedrukt
   if (digitalRead(BUTTON_PIN) == HIGH) {
-    if (serialInput == "15"){
+   // if (serialInput == "15"){
     Serial.println("Knop 15 ingedrukt");
     Motor(HALL_SENSOR_PIN, false); // Motoren draaien omlaag tot Hall sensor op pin 2 actief wordt
     delay(250);
